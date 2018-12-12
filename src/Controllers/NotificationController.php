@@ -21,6 +21,16 @@ class NotificationController extends Controller
     {
         $this->authorize('index', Notification::class);
 
+        $arrItems = scandir($_SERVER['DOCUMENT_ROOT'].'/../app/Notifications');
+        foreach ($arrItems as $item) {
+            if (strlen($item) > 2) {
+                $item = preg_replace('/\.php/', '', $item);
+                if (empty(Notification::where('class', $item)->get()->first())) {
+                    Notification::create(['class' => $item, 'channels' => json_encode([]), 'description' => '*Automatically generated*']);
+                }
+            }
+        }
+
         JavaScript::put(['models' => Notification::allWithAccessors('edit_url')]);
 
         return view('oxygencms::admin.notifications.index');
@@ -89,7 +99,7 @@ class NotificationController extends Controller
         $this->authorize('update', Notification::class);
 
         $notification->update($request->except('channels'));
-        $notification->channels = json_encode($request->input('channels'));
+        $notification->channels = json_encode($request->has('channels') ? $request->input('channels') : []);
         $notification->save();
 
         $notification->fields()->delete();
@@ -99,11 +109,13 @@ class NotificationController extends Controller
             while (++$i < sizeof($arrFields)) {
                 $field = new NotificationField();
                 $field->notification_id = $notification->id;
-                $field->name = $request->input('field_name')[$i];
-
-                $field->value = ['en' => $request->input('field_value-en')[$i]];
-
-                $field->placeholders = json_encode(explode(',', $request->input('placeholders')[$i]));
+                // $field->name = $request->input('field_name')[$i];
+                // $field->placeholders = json_encode(explode(',', $request->input('placeholders')[$i]));
+                $arr = [];
+                foreach (config('oxygen.locales') as $l => $lang) {
+                    $arr[$l] = $request->input('field_value-'.$l)[$i];
+                }
+                $field->value = $arr;
                 $field->save();
             }
         }

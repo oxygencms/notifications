@@ -51,6 +51,7 @@
                 >{{ $channel }}</option>
             @endforeach
         </select>
+            {!! $errors->first('channels', '<small class="form-text text-danger">:message</small>') !!}
         <p class="help-block"></p>
     </div>
 
@@ -187,9 +188,6 @@
             <hr>
         </div>
     @endforeach
-
-
-
     </div>
 
     <button class="btn btn-success" type="button" onclick="addField()">Add Field</button>

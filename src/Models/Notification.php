@@ -16,7 +16,7 @@ class Notification extends Model
      * @var array
      */
     public $fillable = [
-        'subject', 'description', 'layout', 'template', 'use_html', 'active', 'channels'
+        'class', 'subject', 'description', 'layout', 'template', 'use_html', 'active', 'channels'
     ];
 
     public $translatable = ['subject'];

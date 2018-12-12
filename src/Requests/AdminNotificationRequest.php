@@ -26,9 +26,6 @@ class AdminNotificationRequest extends FormRequest
         $key = $this->isMethod('POST') ? '' : $this->notification->id;
 
         $rules = [
-            // 'group' => 'required|string|in:'.$groups,
-            // 'key' => "required|string|unique:notifications,id," . $key,
-
             'description' => 'string',
             'template' => 'nullable|string',
             'layout' => 'nullable|string',
