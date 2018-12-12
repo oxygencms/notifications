@@ -29,7 +29,7 @@ class NotificationController extends Controller
                     Notification::create([
                                             'class' => $item,
                                             'channels' => json_encode(['mail']),
-                                            'description' => '*Email template for the event '.$item.' / automatically generated*'
+                                            'description' => '*Email template for the event '.$item.' / automatically generated*',
                                             'active' => 1
                                         ]);
                 }
