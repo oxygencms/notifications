@@ -16,7 +16,7 @@ class NotificationField extends Model
      * @var array
      */
     public $fillable = [
-        'notification_id', 'name', 'valie', 'placeholders'
+        'notification_id', 'value',
     ];
 
     public $translatable = ['value'];

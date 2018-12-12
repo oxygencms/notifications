@@ -114,13 +114,11 @@ class NotificationController extends Controller
             while (++$i < sizeof($arrFields)) {
                 $field = new NotificationField();
                 $field->notification_id = $notification->id;
-                // $field->name = $request->input('field_name')[$i];
-                // $field->placeholders = json_encode(explode(',', $request->input('placeholders')[$i]));
-                $arr = [];
+                $values = [];
                 foreach (config('oxygen.locales') as $l => $lang) {
-                    $arr[$l] = $request->input('field_value-'.$l)[$i];
+                    $values[$l] = $request->input('field_value-'.$l)[$i];
                 }
-                $field->value = $arr;
+                $field->value = $values;
                 $field->save();
             }
         }

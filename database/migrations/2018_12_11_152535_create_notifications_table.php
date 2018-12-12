@@ -20,6 +20,7 @@ class CreateNotificationsTable extends Migration
             $table->boolean('use_html')->default(0);
             $table->boolean('active')->default(0);
             $table->string('subject')->nullable();
+            $table->string('button_title')->nullable();
             $table->string('description')->nullable();
             $table->string('layout')->nullable();
             $table->string('template')->nullable();

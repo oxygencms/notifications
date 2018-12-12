@@ -21,10 +21,7 @@ class CreateNotificationFieldsTable extends Migration
                 ->references('id')
                 ->on('notifications');
 
-            $table->string('name')->nullable();
             $table->text('value')->nullable();
-            $table->json('placeholders')->nullable();
-
             $table->timestamps();
         });
     }

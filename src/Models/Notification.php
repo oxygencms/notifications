@@ -16,10 +16,10 @@ class Notification extends Model
      * @var array
      */
     public $fillable = [
-        'class', 'subject', 'description', 'layout', 'template', 'use_html', 'active', 'channels'
+        'class', 'subject', 'description', 'layout', 'template', 'use_html', 'active', 'channels', 'button_title'
     ];
 
-    public $translatable = ['subject'];
+    public $translatable = ['subject', 'button_title'];
 
     public $appends = ['model_name'];
 

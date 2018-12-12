@@ -70,7 +70,7 @@
 @foreach(config('oxygen.locales') as $locale => $locale_name)
         <!-- subject -->
         <div class="form-group col-6">
-            <label for="{{ "subject-$locale" }}">Subject ({{ $locale }})</label>
+            <label for="{{ "subject-$locale" }}">Subject ({{ strtoupper($locale) }})</label>
             <input type="text"
                    class="form-control {{ $errors->has("subject.$locale") ? 'is-invalid' : null }}"
                    id="{{ "subject-$locale" }}"
@@ -81,31 +81,24 @@
             {!! $errors->first("subject.$locale", '<small class="form-text text-danger">:message</small>') !!}
         </div>
 @endforeach
-    </div>
+</div>
 
-    {{-- <div class="row">
+<div class="row">
+@foreach(config('oxygen.locales') as $locale => $locale_name)
+        <!-- subject -->
         <div class="form-group col-6">
-            <label for="template">Template<strong></strong></label>
+            <label for="{{ "button_title-$locale" }}">Button Title ({{ strtoupper($locale) }})</label>
             <input type="text"
-                   class="form-control {{ $errors->has('template') ? 'is-invalid' : null }}"
-                   id="template"
-                   name="template"
-                   placeholder="Enter notification template..."
-                   value="{{ old('template', optional($notification)->template)}}"/>
-            {!! $errors->first('template', '<small class="form-text text-danger">:message</small>') !!}
+                   class="form-control {{ $errors->has("button_title.$locale") ? 'is-invalid' : null }}"
+                   id="{{ "button_title-$locale" }}"
+                   name="{{ "button_title[$locale]" }}"
+                   placeholder="Enter notification button_title..."
+                   value="{{ old("button_title.$locale", optional($notification)->getTranslation('button_title', $locale)) }}"
+            >
+            {!! $errors->first("button_title.$locale", '<small class="form-text text-danger">:message</small>') !!}
         </div>
-
-        <div class="form-group col-6">
-            <label for="layout">Layout<strong></strong></label>
-            <input type="text"
-                   class="form-control {{ $errors->has('layout') ? 'is-invalid' : null }}"
-                   id="layout"
-                   name="layout"
-                   placeholder="Enter notification layout..."
-                   value="{{ old('layout', optional($notification)->layout)}}"/>
-            {!! $errors->first('layout', '<small class="form-text text-danger">:message</small>') !!}
-        </div>
-    </div>--}}
+@endforeach
+</div>
 
     <br/>
     <h3>Fields</h3>
@@ -135,7 +128,7 @@
             <div class="row">
             @foreach(config('oxygen.locales') as $locale => $locale_name)
                 <div class="form-group col-6">
-                    <label for="{{ "field_value-$locale" }}[]">Value ({{ $locale }})</label>
+                    <label for="{{ "field_value-$locale" }}[]">Content ({{ strtoupper($locale) }})</label>
                     <textarea
                            class="form-control"
                            id="{{ "field_value-$locale" }}[]"
@@ -173,7 +166,7 @@
             <div class="row field-{{ $f }}">
             @foreach(config('oxygen.locales') as $locale => $locale_name)
                 <div class="form-group col-6">
-                    <label for="{{ "field_value-$locale" }}[]">Value ({{ $locale }})</label>
+                    <label for="{{ "field_value-$locale" }}[]">Content ({{ strtoupper($locale) }})</label>
                     <textarea
                            class="form-control"
                            id="{{ "field_value-$locale" }}[]"
