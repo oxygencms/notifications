@@ -26,7 +26,7 @@ class NotificationController extends Controller
             if (strlen($item) > 2) {
                 $item = preg_replace('/\.php/', '', $item);
                 if (empty(Notification::where('class', $item)->get()->first())) {
-                    Notification::create(['class' => $item, 'channels' => json_encode([]), 'description' => '*Automatically generated*']);
+                    Notification::create(['class' => $item, 'channels' => json_encode(['mail']), 'description' => '*Email template for the event '.$item.' / automatically generated*']);
                 }
             }
         }
