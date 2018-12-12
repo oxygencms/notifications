@@ -21,7 +21,7 @@ class NotificationController extends Controller
     {
         $this->authorize('index', Notification::class);
 
-        $arrItems = scandir($_SERVER['DOCUMENT_ROOT'].'/../app/Notifications');
+        $arrItems = scandir(base_path('app/Notifications'));
         foreach ($arrItems as $item) {
             if (strlen($item) > 2) {
                 $item = preg_replace('/\.php/', '', $item);
