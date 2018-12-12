@@ -38,20 +38,6 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         Route::middleware(['web', 'admin'])
-             ->prefix('admin')
-             ->name('admin.')
-             ->namespace($this->namespace)
-             ->group(function () {
-                 Route::patch('update/active/{model_name}/{model_id}', 'ModelController@updateActive')->name('update_active_model');
-                 Route::delete('seek-and-destroy/{model_name}/{model_id}', 'ModelController@destroy')->name('seek_and_destroy');
-                 Route::get('/', 'DashboardController@index')->name('dashboard');
-             });
-
-        Route::middleware('web')->namespace($this->namespace)->group(function () {
-            Route::get('lang/{lang}', 'LanguageController@setLocale')->name('language');
-        });
-
-        Route::middleware(['web', 'admin'])
              ->name('admin.')
              ->prefix('admin')
              ->namespace('Oxygencms\Notifications\Controllers')
