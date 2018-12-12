@@ -1,1 +1,3 @@
-# The core Oxygen CMS package.
+# The Oxygen CMS notifications package.
+
+
