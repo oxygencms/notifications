@@ -1,0 +1,26 @@
+{
+    "name": "oxygencms/notifications",
+    "description": "Oxygen CMS notifications package.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mikhail Stoyanov",
+            "email": "gmishak@gmail.com"
+        }
+    ],
+    "require": {
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Oxygencms\\Notifications\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Oxygencms\\Notifications\\NotificationServiceProvider"
+            ]
+        }
+    }
+}
