@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxygencms\Notifications\Models\Notifications\Commands;
+namespace Oxygencms\Notifications\Commands;
 
 use Illuminate\Console\Command;
 use Oxygencms\Core\Models\Model;
