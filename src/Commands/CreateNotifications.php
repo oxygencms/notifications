@@ -7,6 +7,7 @@ use Oxygencms\Core\Models\Model;
 use Spatie\Translatable\HasTranslations;
 use Oxygencms\Notifications\Models\NotificationField;
 use Oxygencms\Notifications\Models\Notification;
+use Oxygencms\Notifications\Commands\CreateNotifications;
 
 class CreateNotifications extends Command
 {
