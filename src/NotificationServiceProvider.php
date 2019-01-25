@@ -30,7 +30,7 @@ class NotificationServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                Oxygencms\Notifications\Commands\CreateNotifications::class, 
+                Commands\CreateNotifications::class, 
             ]);
         }
     }
