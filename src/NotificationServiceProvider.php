@@ -26,6 +26,13 @@ class NotificationServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../database/seeds/' => database_path('seeds'),
         ], 'seeds');
+
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Oxygencms\Notifications\Models\Notifications\Commands\CreateNotifications::class,
+            ]);
+        }
     }
 
     /**
