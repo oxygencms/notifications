@@ -5,6 +5,8 @@ namespace Oxygencms\Notifications\Models;
 use Oxygencms\Core\Models\Model;
 use Spatie\Translatable\HasTranslations;
 use Oxygencms\Notifications\Models\NotificationField;
+use Composer\Script\Event;
+use Illuminate\Contracts\Console\Kernel;
 
 class Notification extends Model
 {
