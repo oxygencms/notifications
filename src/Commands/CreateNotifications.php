@@ -66,6 +66,8 @@ class CreateNotifications extends Command
                                             'notification_id' => $n->id,
                                             'value' => $arr,
                                         ]);
+
+                    $this->info('Notification template created for '.$item);
                 }
             }
         }
