@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <form action="{{ route('admin.notification.update', $notification) }}" method="POST">
+    <form action="{{ route('admin.notification.update', $notification) }}" method="POST" onsubmit="deleteBlankFields()">
         {!! csrf_field() !!}
         {!! method_field('patch') !!}
 

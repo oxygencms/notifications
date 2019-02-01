@@ -105,26 +105,11 @@
 
     <div id="fields">
         <div id="field-blank" style="display: none">
-             <div class="row" style="display: none">
-                <div class="form-group col-6">
-                    <label for="field_name[]">Name<strong></strong></label>
-                    <input type="text"
-                           class="form-control"
-                           id="field_name[]"
-                           name="field_name[]"
-                           placeholder="Enter field name..."
-                           value=""/>
-                </div>
-                <div class="form-group col-6">
-                    <label for="field_placeholders[]">Placeholders<strong></strong></label>
-                    <input type="text"
-                           class="form-control"
-                           id="field_placeholders[]"
-                           name="field_placeholders[]"
-                           placeholder="Enter placeholders..."
-                           value=""/>
-                </div>
-            </div>
+            <input type="hidden"
+                     class="form-control"
+                     id="field_is_button[]"
+                     name="field_is_button[]"
+                     value="0"/>
             <div class="row">
             @foreach(config('oxygen.locales') as $locale => $locale_name)
                 <div class="form-group col-6">
@@ -139,64 +124,113 @@
             @endforeach
             </div>
         </div>
-
-
-    @foreach ($notification->fields as $f => $field)
-        <div id="field-{{ $f }}" class="row-field">
-            <div class="row" style="display: none">
-                <div class="form-group col-6">
-                    <label for="field_name[]">Name<strong></strong></label>
-                    <input type="text"
-                           class="form-control"
-                           id="field_name[]"
-                           name="field_name[]"
-                           placeholder="Enter field name..."
-                           value="{{ $field->name }}"/>
-                </div>
-                <div class="form-group col-6">
-                    <label for="field_placeholders[]">Placeholders<strong></strong></label>
-                    <input type="text"
-                           class="form-control"
-                           id="field_placeholders[]"
-                           name="field_placeholders[]"
-                           placeholder="Enter placeholders..."
-                           value="{{ json_decode($field->field_placeholders) }}"/>
-                </div>
-            </div>
-            <div class="row field-{{ $f }}">
+        <div id="button-blank" style="display: none">
+          <div class="row row-button">
+            <input type="hidden"
+                     class="form-control"
+                     id="field_is_button[]"
+                     name="field_is_button[]"
+                     value="1"/>
             @foreach(config('oxygen.locales') as $locale => $locale_name)
-                <div class="form-group col-6">
-                    <label for="{{ "field_value-$locale" }}[]">Content ({{ strtoupper($locale) }})</label>
-                    <textarea
-                           class="form-control"
+                    <input
+                          type="hidden"
                            id="{{ "field_value-$locale" }}[]"
                            name="{{ "field_value-$locale" }}[]"
-                           placeholder="Enter notification field value..."
-                    >{{ old("field_value.$locale", optional($field)->getTranslation('value', $locale)) }}</textarea>
-                    {!! $errors->first("field_value.$locale", '<small class="form-text text-danger">:message</small>') !!}
-                </div>
+                           value=""
+                    >
             @endforeach
+            <div class="form-group col-12">
+              <label>
+                Use this as a placeholder to specify the exact vertical slot where the CTA button should appear
+                <br/>
+                *Button title will still be taken from the Button title field
+              </label>
             </div>
-            <button class="btn btn-danger" type="button" onclick="removeField({{ $f }})">Remove Field</button>
+          </div>
+        </div>
+
+    @php $hide_button = 0 @endphp
+    @foreach ($notification->fields as $f => $field)
+        <div id="field-{{ $f }}" class="row-field">
+            <input type="hidden"
+                     class="form-control"
+                     id="field_is_button[]"
+                     name="field_is_button[]"
+                     value="{{ $field->is_button }}"/>
+      @if ($field->is_button)
+          @php $hide_button = 1 @endphp
+          <div class="row row-button row-field">
+            <div class="form-group col-12">
+              <label>
+                Use this as a placeholder to specify the exact vertical slot where the CTA button should appear
+                <br/>
+                *Button title will still be taken from the Button title field
+              </label>
+            </div>
+          </div>
+          <button class="btn btn-danger" type="button" onclick="removeField({{ $f }})">Remove button</button>
+      @else
+          <div class="row field-{{ $f }}">
+            @foreach(config('oxygen.locales') as $locale => $locale_name)
+              <div class="form-group col-6">
+                  <label for="{{ "field_value-$locale" }}[]">Content ({{ strtoupper($locale) }})</label>
+                  <textarea
+                         class="form-control"
+                         id="{{ "field_value-$locale" }}[]"
+                         name="{{ "field_value-$locale" }}[]"
+                         placeholder="Enter notification field value..."
+                  >{{ old("field_value.$locale", optional($field)->getTranslation('value', $locale)) }}</textarea>
+                  {!! $errors->first("field_value.$locale", '<small class="form-text text-danger">:message</small>') !!}
+              </div>
+            @endforeach
+          </div>
+          <button class="btn btn-danger" type="button" onclick="removeField({{ $f }})">Remove Field</button>
+      @endif
             <hr>
         </div>
     @endforeach
     </div>
 
     <button class="btn btn-success" type="button" onclick="addField()">Add Field</button>
+    <button class="btn btn-success" type="button" onclick="addButton()" id="add-button"@if ($hide_button)  style="display:none" @endif>Add Button</button>
     <br/>
     <br/>
     <hr>
 
 
 <script type="text/javascript">
-    function removeField(id) {
+    function removeField(id)
+    {
         $('#field-'+id).remove();
+        checkAddButtonVisibility();
     }
 
-    function addField() {
+    function addField()
+    {
         var id = $('.row-field').length;
         $('#fields').append('<div id="field-'+id+'" class="row-field">'+$('#field-blank').html()+'<button class="btn btn-danger" type="button" onclick="removeField('+id+')">Remove Field</button><hr/></div>');
+        checkAddButtonVisibility();
+    }
+
+    function addButton()
+    {
+        var id = $('.row-field').length;
+        $('#fields').append('<div id="field-'+id+'" class="row-button">'+$('#button-blank').html()+'<button class="btn btn-danger" type="button" onclick="removeField('+id+')">Remove Button</button><hr/></div>');
+        checkAddButtonVisibility();
+    }
+
+    function checkAddButtonVisibility()
+    {
+      if ($('.row-button').length > 1) {
+        $('#add-button').hide();
+      } else {
+        $('#add-button').show();
+      }
+    }
+
+    function deleteBlankFields()
+    {
+      $('.js-delete-before-submit').remove();
     }
 
 </script>

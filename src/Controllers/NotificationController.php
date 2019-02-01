@@ -93,9 +93,9 @@ class NotificationController extends Controller
         $notification->save();
 
         $notification->fields()->delete();
-        if ($request->has('field_name')) {
-            $i = 0;
-            $arrFields = $request->input('field_name');
+        if ($request->has('field_is_button')) {
+            $i = 1;
+            $arrFields = $request->input('field_is_button');
             while (++$i < sizeof($arrFields)) {
                 $field = new NotificationField();
                 $field->notification_id = $notification->id;
@@ -104,6 +104,7 @@ class NotificationController extends Controller
                     $values[$l] = $request->input('field_value-'.$l)[$i];
                 }
                 $field->value = $values;
+                $field->is_button = $request->input('field_is_button')[$i];
                 $field->save();
             }
         }
