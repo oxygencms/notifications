@@ -57,7 +57,7 @@
 
     <div class="form-group col-6">
         <label for="description">Description<strong></strong></label>
-        <textarea class="form-control tinymce{{ $errors->has('description') ? 'is-invalid' : null }}"
+        <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : null }}"
                id="description"
                name="description"
                placeholder="Enter notification description..."
@@ -115,7 +115,7 @@
                 <div class="form-group col-6">
                     <label for="{{ "field_value-$locale" }}[]">Content ({{ strtoupper($locale) }})</label>
                     <textarea
-                           class="form-control"
+                           class="form-control tinymce"
                            id="{{ "field_value-$locale" }}[]"
                            name="{{ "field_value-$locale" }}[]"
                            placeholder="Enter notification field value..."
@@ -175,7 +175,7 @@
               <div class="form-group col-6">
                   <label for="{{ "field_value-$locale" }}[]">Content ({{ strtoupper($locale) }})</label>
                   <textarea
-                         class="form-control"
+                         class="form-control tinymce"
                          id="{{ "field_value-$locale" }}[]"
                          name="{{ "field_value-$locale" }}[]"
                          placeholder="Enter notification field value..."
@@ -235,3 +235,4 @@
 
 </script>
 
+@include('oxygencms::admin.partials.tinymce', ['selector' => '.tinymce', 'model' => $notification])
