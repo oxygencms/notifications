@@ -3,15 +3,15 @@
 namespace Oxygencms\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification as BaseNotification;
 
-class Notification extends BaseNotification implements ShouldQueue
+class Notification extends BaseNotification
 {
     use Queueable;
 
 	protected $class;
+
 	public $template;
 
     public function __construct($class)
