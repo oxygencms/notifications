@@ -2,14 +2,10 @@
 
 namespace Oxygencms\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification as BaseNotification;
 
 class Notification extends BaseNotification
 {
-    use Queueable;
-
 	protected $class;
 
 	public $template;
