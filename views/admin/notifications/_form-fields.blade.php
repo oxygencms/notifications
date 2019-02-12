@@ -115,7 +115,8 @@
                 <div class="form-group col-6">
                     <label for="{{ "field_value-$locale" }}[]">Content ({{ strtoupper($locale) }})</label>
                     <textarea
-                           class="form-control tinymce"
+                            data-locale="{{ $locale }}"
+                           class="form-control"
                            id="{{ "field_value-$locale" }}[]"
                            name="{{ "field_value-$locale" }}[]"
                            placeholder="Enter notification field value..."
@@ -197,42 +198,66 @@
     <br/>
     <hr>
 
-
-<script type="text/javascript">
-    function removeField(id)
-    {
-        $('#field-'+id).remove();
-        checkAddButtonVisibility();
-    }
-
-    function addField()
-    {
-        var id = $('.row-field').length;
-        $('#fields').append('<div id="field-'+id+'" class="row-field">'+$('#field-blank').html()+'<button class="btn btn-danger" type="button" onclick="removeField('+id+')">Remove Field</button><hr/></div>');
-        checkAddButtonVisibility();
-    }
-
-    function addButton()
-    {
-        var id = $('.row-field').length;
-        $('#fields').append('<div id="field-'+id+'" class="row-button">'+$('#button-blank').html()+'<button class="btn btn-danger" type="button" onclick="removeField('+id+')">Remove Button</button><hr/></div>');
-        checkAddButtonVisibility();
-    }
-
-    function checkAddButtonVisibility()
-    {
-      if ($('.row-button').length > 1) {
-        $('#add-button').hide();
-      } else {
-        $('#add-button').show();
+@push('js')
+  <script type="text/javascript">
+      function removeField(id)
+      {
+          $('#field-'+id).remove();
+          checkAddButtonVisibility();
       }
-    }
 
-    function deleteBlankFields()
-    {
-      $('.js-delete-before-submit').remove();
-    }
+      function addField()
+      {
+        var id = $('.row-field').length;
 
-</script>
+        $('#fields').append('<div id="field-'+id+'" class="row-field">'+$('#field-blank').html()+'<button class="btn btn-danger" type="button" onclick="removeField('+id+')">Remove Field</button><hr/></div>');
+        
+        $('#field-'+id+' textarea').each(function(){
+
+          var textarea_id = 'field-'+id+'-'+$(this).attr('data-locale');
+
+          $(this).attr('id', textarea_id);
+
+          tinymce.init({
+              selector: '#'+textarea_id,
+              plugins: ['code', 'link', 'image'],
+              relative_urls : false,
+              remove_script_host : true,
+              image_advtab: true,
+              image_dimensions: false,
+              image_class_list: [
+                  {title: 'None', value: ''},
+                  {title: 'Responsive', value: 'img-responsive'}
+              ]
+          });
+
+        });
+
+        checkAddButtonVisibility();
+      }
+
+      function addButton()
+      {
+          var id = $('.row-field').length;
+          $('#fields').append('<div id="field-'+id+'" class="row-button">'+$('#button-blank').html()+'<button class="btn btn-danger" type="button" onclick="removeField('+id+')">Remove Button</button><hr/></div>');
+          checkAddButtonVisibility();
+      }
+
+      function checkAddButtonVisibility()
+      {
+        if ($('.row-button').length > 1) {
+          $('#add-button').hide();
+        } else {
+          $('#add-button').show();
+        }
+      }
+
+      function deleteBlankFields()
+      {
+        $('.js-delete-before-submit').remove();
+      }
+
+  </script>
+@endpush
 
 @include('oxygencms::admin.partials.tinymce', ['selector' => '.tinymce', 'model' => $notification])
