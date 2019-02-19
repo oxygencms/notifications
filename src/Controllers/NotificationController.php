@@ -96,15 +96,23 @@ class NotificationController extends Controller
         if ($request->has('field_is_button')) {
             $i = 1;
             $arrFields = $request->input('field_is_button');
+
             while (++$i < sizeof($arrFields)) {
+
                 $field = new NotificationField();
                 $field->notification_id = $notification->id;
-                $values = [];
-                foreach (config('oxygen.locales') as $l => $lang) {
-                    $values[$l] = $request->input('field_value-'.$l)[$i];
-                }
-                $field->value = $values;
                 $field->is_button = $request->input('field_is_button')[$i];
+
+                $values = [];
+
+                // Retrieve language content for the field (not applicable for buttons)
+                if (!$field->is_button) {
+                    foreach (config('oxygen.locales') as $l => $lang) {
+                        $values[$l] = $request->input('field_value-'.$l)[$i];
+                    }
+                }
+
+                $field->value = $values;
                 $field->save();
             }
         }

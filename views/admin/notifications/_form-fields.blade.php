@@ -115,11 +115,11 @@
                 <div class="form-group col-6">
                     <label for="{{ "field_value-$locale" }}[]">Content ({{ strtoupper($locale) }})</label>
                     <textarea
-                            data-locale="{{ $locale }}"
-                           class="form-control"
-                           id="{{ "field_value-$locale" }}[]"
-                           name="{{ "field_value-$locale" }}[]"
-                           placeholder="Enter notification field value..."
+                      data-locale="{{ $locale }}"
+                      class="form-control"
+                      id="{{ "field_value-$locale" }}[]"
+                      name="{{ "field_value-$locale" }}[]"
+ placeholder="Enter notification field value..."
                     ></textarea>
                 </div>
             @endforeach
@@ -167,6 +167,14 @@
                 <br/>
                 *Button title will still be taken from the Button title field
               </label>
+              @foreach(config('oxygen.locales') as $locale => $locale_name)
+                      <input
+                            type="hidden"
+                             id="{{ "field_value-$locale" }}[]"
+                             name="{{ "field_value-$locale" }}[]"
+                             value=""
+                      >
+              @endforeach
             </div>
           </div>
           <button class="btn btn-danger" type="button" onclick="removeField({{ $f }})">Remove button</button>
