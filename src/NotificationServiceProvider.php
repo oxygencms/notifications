@@ -2,6 +2,7 @@
 
 namespace Oxygencms\Notifications;
 
+use Illuminate\Database\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class NotificationServiceProvider extends ServiceProvider
@@ -28,9 +29,10 @@ class NotificationServiceProvider extends ServiceProvider
         ], 'seeds');
 
 
-        if ($this->app->runningInConsole()) {
+        // Create notifications if running in console and notifications table exists
+        if ($this->app->runningInConsole() && \Schema::hasTable('notifications')) {
             $this->commands([
-                Commands\CreateNotifications::class, 
+                Commands\CreateNotifications::class,
             ]);
         }
     }
