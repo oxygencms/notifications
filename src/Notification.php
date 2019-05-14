@@ -60,4 +60,25 @@ class Notification extends BaseNotification
             //
         ];
     }
+
+
+    /**
+     * Fill placeholders in notification subject or content.
+     *
+     * @param  string $content
+     * @param  array $placeholders
+     * @return string
+     */
+    public function parsePlaceholders($content, $placeholders)
+    {
+        $keys = [
+            'pa_serial' => '__PA__',
+        ];
+
+        foreach ($placeholders as $k => $v) {
+            $content = preg_replace('/'.$keys[$k].'/', $v);
+        }
+
+        return $content;
+    }
 }
