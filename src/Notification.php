@@ -76,7 +76,7 @@ class Notification extends BaseNotification
         ];
 
         foreach ($placeholders as $k => $v) {
-            $content = preg_replace('/'.$keys[$k].'/', $v);
+            $content = preg_replace('/'.$keys[$k].'/', $v, $content);
         }
 
         return $content;
