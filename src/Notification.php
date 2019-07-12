@@ -76,6 +76,11 @@ class Notification extends BaseNotification
         ];
 
         foreach ($placeholders as $k => $v) {
+            if ($k == 'pa_serial') {
+                $content = preg_replace('/'.$keys[$k].'/', (int)$v, $content);
+                continue;
+            }
+
             $content = preg_replace('/'.$keys[$k].'/', $v, $content);
         }
 
