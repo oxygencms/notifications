@@ -27,7 +27,7 @@ class NotificationPolicy extends BasePolicy
     /**
      * Determine whether the user can create notifications.
      *
-     * @param  \Oxygencms\Users\Models\User  $user
+     * @param User $user
      * @return mixed
      */
     public function create(User $user)
@@ -42,7 +42,7 @@ class NotificationPolicy extends BasePolicy
     /**
      * Determine whether the user can update the notification.
      *
-     * @param  \Oxygencms\Users\Models\User  $user
+     * @param User $user
      * @return mixed
      */
     public function update(User $user)
@@ -57,7 +57,7 @@ class NotificationPolicy extends BasePolicy
     /**
      * Determine whether the user can delete the notification.
      *
-     * @param  \Oxygencms\Users\Models\User  $user
+     * @param User $user
      * @return mixed
      */
     public function delete(User $user)

@@ -2,22 +2,21 @@
 
 namespace Oxygencms\Notifications;
 
+use \Oxygencms\Notifications\Models\Notification as Template;
 use Illuminate\Notifications\Notification as BaseNotification;
 
 class Notification extends BaseNotification
 {
     protected $class;
-    
+
     public $template;
-    
+
     public function __construct($class)
     {
         $this->class = $class;
-        $this->template = \Oxygencms\Notifications\Models\Notification::where('class', preg_replace('/.*?\\\\/', '', $this->class))
-                                                                      ->get()
-                                                                      ->first();
+        $this->template = Template::where('class', preg_replace('/.*?\\\\/', '', $this->class))->get()->first();
     }
-    
+
     /**
      * Get the notification's delivery channels.
      *
@@ -29,7 +28,7 @@ class Notification extends BaseNotification
     {
         return ['mail'];
     }
-    
+
     /**
      * Get the mail representation of the notification.
      *
@@ -51,7 +50,7 @@ class Notification extends BaseNotification
                 ]
             )->from(env('MAIL_FROM'), env('MAIL_FROM_NAME'))->subject($this->template->subject);
     }
-    
+
     /**
      * Get the array representation of the notification.
      *
@@ -65,28 +64,28 @@ class Notification extends BaseNotification
             //
         ];
     }
-    
+
     /**
      * Fill placeholders in notification subject or content.
      *
      * @param string $content
-     * @param array  $placeholders
+     * @param array $placeholders
      *
      * @return string
      */
     public function parsePlaceholders($content, $placeholders)
     {
         $keys = config('oxy_notifications.keys');
-        
+
         foreach ($placeholders as $k => $v) {
             if ($k == 'pa_serial') {
                 $content = preg_replace('/' . $keys[$k] . '/', (int)$v, $content);
                 continue;
             }
-            
+
             $content = preg_replace('/' . $keys[$k] . '/', $v, $content);
         }
-        
+
         return $content;
     }
 }

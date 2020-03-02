@@ -4,9 +4,7 @@ namespace Oxygencms\Notifications\Models;
 
 use Oxygencms\Core\Models\Model;
 use Spatie\Translatable\HasTranslations;
-use Oxygencms\Notifications\Models\NotificationField;
-use Composer\Script\Event;
-use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Notification extends Model
 {
@@ -28,7 +26,7 @@ class Notification extends Model
     /**
      * @return HasMany
      */
-    public function fields()
+    public function fields(): HasMany
     {
         return $this->hasMany(NotificationField::class);
     }

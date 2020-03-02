@@ -2,7 +2,6 @@
 
 namespace Oxygencms\Notifications;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -10,10 +9,12 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * The policy mappings for the application.
      *
+     * todo: build from config instead..
+     *
      * @var array
      */
     protected $policies = [
-        'Oxygencms\Notifications\Models\Notification' => 'Oxygencms\Notifications\Policies\NotificationPolicy',
+        \Oxygencms\Notifications\Models\Notification::class => \Oxygencms\Notifications\Policies\NotificationPolicy::class,
     ];
 
     /**

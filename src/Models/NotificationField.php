@@ -4,7 +4,7 @@ namespace Oxygencms\Notifications\Models;
 
 use Oxygencms\Core\Models\Model;
 use Spatie\Translatable\HasTranslations;
-use Oxygencms\Notifications\Models\Notification;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class NotificationField extends Model
 {
@@ -26,7 +26,7 @@ class NotificationField extends Model
      *
      * @return BelongsTo
      */
-    public function notification()
+    public function notification(): BelongsTo
     {
         return $this->belongsTo(Notification::class);
     }

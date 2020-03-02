@@ -3,10 +3,10 @@
 namespace Oxygencms\Notifications\Controllers;
 
 use JavaScript;
-use Oxygencms\Notifications\Models\Notification;
-use Oxygencms\Notifications\Models\NotificationField;
 use Illuminate\Support\Facades\Cache;
 use Oxygencms\Core\Controllers\Controller;
+use Oxygencms\Notifications\Models\Notification;
+use Oxygencms\Notifications\Models\NotificationField;
 use Oxygencms\Notifications\Requests\AdminNotificationRequest as NotificationRequest;
 
 class NotificationController extends Controller
@@ -14,7 +14,7 @@ class NotificationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
@@ -29,7 +29,7 @@ class NotificationController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
@@ -44,7 +44,7 @@ class NotificationController extends Controller
      *
      * @param NotificationRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(NotificationRequest $request)
@@ -65,7 +65,7 @@ class NotificationController extends Controller
      *
      * @param Notification $notification
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Notification $notification)
@@ -81,7 +81,7 @@ class NotificationController extends Controller
      * @param NotificationRequest $request
      * @param Notification $notification
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(NotificationRequest $request, Notification $notification)
@@ -128,7 +128,7 @@ class NotificationController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Notification $notification
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Notification $notification)

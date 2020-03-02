@@ -23,9 +23,7 @@ class AdminNotificationRequest extends FormRequest
      */
     public function rules()
     {
-        $key = $this->isMethod('POST') ? '' : $this->notification->id;
-
-        $rules = [
+        return [
             'description' => 'string',
             'template' => 'nullable|string',
             'layout' => 'nullable|string',
@@ -33,7 +31,5 @@ class AdminNotificationRequest extends FormRequest
             'subject' => 'array|distinct',
             'subject.*' => 'required|string',
         ];
-
-        return $rules;
     }
 }

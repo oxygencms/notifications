@@ -21,13 +21,12 @@ class NotificationServiceProvider extends ServiceProvider
         ], 'views');
 
         $this->publishes([
-            __DIR__.'/../database/migrations' => database_path('migrations'),
-        ], 'migrations');
+            __DIR__.'/../config/oxy_notifications.php' => config_path('oxy_notifications.php')
+        ], 'config');
 
         $this->publishes([
-            __DIR__.'/../database/seeds' => database_path('seeds'),
-        ], 'seeds');
-
+            __DIR__.'/../database/migrations' => database_path('migrations'),
+        ], 'migrations');
 
         // Create notifications if running in console and notifications table exists
         if ($this->app->runningInConsole() && \Schema::hasTable('notifications')) {
