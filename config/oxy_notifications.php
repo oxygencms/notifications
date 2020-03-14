@@ -4,7 +4,6 @@ return [
 
     'channels' => [
         'mail',
-        'sms',
     ],
 
     'keys' => [

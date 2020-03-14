@@ -26,6 +26,10 @@ class Notification extends BaseNotification
      */
     public function via($notifiable)
     {
+        if (! $this->template->active) {
+            return [];
+        }
+
         return ['mail'];
     }
 
@@ -34,21 +38,26 @@ class Notification extends BaseNotification
      *
      * @param mixed $notifiable
      *
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return bool|\Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
-        return empty($this->template)
-            ? false
-            : (new MailMessage)->view(
-                'mails.default', [
-                    'url' => '/',
-                    'names' => 'Dear Friend',
-                    'subject' => $this->template->subject,
-                    'fields' => $this->template->fields,
-                    'button_title' => $this->template->button_title,
-                ]
-            )->from(env('MAIL_FROM'), env('MAIL_FROM_NAME'))->subject($this->template->subject);
+        if (empty($this->template)) {
+            return false;
+        }
+
+        $data = [
+            'url' => '/',
+            'names' => 'Dear Friend',
+            'subject' => $this->template->subject,
+            'fields' => $this->template->fields,
+            'button_title' => $this->template->button_title,
+        ];
+
+        return (new MailMessage)
+            ->view('mails.default', $data)
+            ->from(config('mail.from.address'), config('mail.from.name'))
+            ->subject($this->template->subject);
     }
 
     /**
