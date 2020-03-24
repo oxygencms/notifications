@@ -26,7 +26,12 @@ class Notification extends BaseNotification
      */
     public function via($notifiable)
     {
-        if (! $this->template->active) {
+        /**
+         * It's optional() be cause in some cases the model may not be present
+         * (php artisan migrate:fresh --seed for example), in this
+         * case we do not want to send notifications.
+         */
+        if (! optional($this->template)->active) {
             return [];
         }
 
